@@ -1,86 +1,96 @@
 import json
 import os.path
-from git import Repo, Tree, Blob, Submodule
+from git import Repo
+import csv
+
+THRESHOLD_MINOR = 0.05
+REPO_PATH = "../rust"
+INTERMEDIATE_RES_PATH = "results.json"
+FINAL_RES_PATH = "results.tsv"
+TAG = "refs/tags/1.14.0"
 
 
-def run():
-    if not os.path.isfile('results.json'):
+def main():
+    """performs the analysis if the INTERMEDIATE_RES_PATH does not exist yet and creates the result.tsv as output"""
+    if not os.path.isfile(INTERMEDIATE_RES_PATH):
         run_analysis()
 
-    with open('results.json') as fp:
+    with open(INTERMEDIATE_RES_PATH) as fp:
         results = json.load(fp)
 
     calculate_features(results)
 
 
 def calculate_features(results):
-    res_string = "filename \t minor \t major \t total \t ownership\n"
+    """creates the FINAL_RES_PATH based on the dict<filename,dict<author, #commits by author>> of analysis
+    results it is given"""
 
-    for (filename,repo_file) in results.items():
-        res_string += filename + "\t"
+    with open(FINAL_RES_PATH, "w") as file:
+        writer = csv.writer(file, delimiter="\t")
+        writer.writerow(("filename", "minor", "major", "total", "ownership"))
 
-        total = len(repo_file)
+        # Iterate over files
+        for (filename, authors) in results.items():
 
-        sum = 0
-        for (_, value) in repo_file.items():
-            sum += value
+            num_authors = len(authors)
 
-        best = 0
-        minor = 0
+            num_commits = 0
+            for (author, author_commits) in authors.items():
+                num_commits += author_commits
 
-        for (_,value) in repo_file.items():
-            if value > best:
-                best = value
+            num_max_commits = 0
+            num_minor_contributors = 0
 
-            if value/(sum*1.0) <= 0.05:
-                minor += 1
+            for (author, author_commits) in authors.items():
+                if author_commits > num_max_commits:
+                    num_max_commits = author_commits
 
-        res_string += str(minor) + "\t"
-        res_string += str(total-minor) + "\t"
-        res_string += str(total) + "\t"
-        res_string += str(best/sum*1.0) + "\n"
+                if author_commits / (num_commits * 1.0) <= THRESHOLD_MINOR:
+                    num_minor_contributors += 1
 
-    with open('results.tsv','w') as file:
-        file.write(res_string)
+            writer.writerow((filename, str(num_minor_contributors), str(num_authors - num_minor_contributors),
+                            str(num_authors), str(num_max_commits / num_commits * 1.0)))
 
 
 def run_analysis():
-    # open repository
-    repo = Repo("../rust")
+    """Crawl the repoistory and build data structure for number of changes per file per author.
+    Saves json to INTERMEDIATE_RES_PATH (dict<filename,dict<author, #commits by author>>)"""
+    repo = Repo(REPO_PATH)
 
     results = {}
     visited = {}
 
     cnt = 0
 
-    to_visit = [repo.tag("refs/tags/1.14.0").commit]
+    to_visit = [repo.tag(TAG).commit]
     while len(to_visit) > 0:
         print(cnt)
         cnt += 1
         handle_commit(to_visit.pop(), results, visited, to_visit)
 
-    with open('results.json','w') as file:
+    with open(INTERMEDIATE_RES_PATH, "w") as file:
         file.write(json.dumps(results))
 
 
 def handle_commit(commit, results, visited, to_visit):
-    blobs = 0
-
+    """Add the data from one commit to the data structure and add any unvisited non-pending parents to the list of
+    nodes to explore."""
     visited[commit.binsha] = True
 
     for parent in commit.parents:
-        for x in commit.diff(parent):
-            if x.b_path not in results:
-                results[x.b_path] = {}
+        for diff in commit.diff(parent):
 
-            if commit.author.email not in results[x.b_path]:
-                results[x.b_path][commit.author.email] = 0
+            # make sure dict exists at both levels
+            if diff.b_path not in results:
+                results[diff.b_path] = {}
+            if commit.author.email not in results[diff.b_path]:
+                results[diff.b_path][commit.author.email] = 0
 
-            results[x.b_path][commit.author.email] += 1
+            results[diff.b_path][commit.author.email] += 1
 
-        if parent.binsha not in visited:
+        if parent.binsha not in visited and parent.binsha not in to_visit:
             to_visit.append(parent)
 
 
 if __name__ == "__main__":
-    run()
+    main()
