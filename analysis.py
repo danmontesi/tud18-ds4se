@@ -58,25 +58,26 @@ def run_analysis():
     repo = Repo(REPO_PATH)
 
     results = {}
-    visited = {}
+
+    num_total_commits = 0
+
+    for commit in repo.tag(TAG).commit.iter_parents():
+        num_total_commits += 1
 
     cnt = 0
-
-    to_visit = [repo.tag(TAG).commit]
-    while len(to_visit) > 0:
-        print(cnt)
+    for commit in repo.tag(TAG).commit.iter_parents():
+        handle_commit(commit, results)
         cnt += 1
-        handle_commit(to_visit.pop(), results, visited, to_visit)
+        if cnt%50 is 0 or cnt is num_total_commits:
+            print("Handled ", str(cnt), " / ", str(num_total_commits), "commits")
 
     with open(INTERMEDIATE_RES_PATH, "w") as file:
         file.write(json.dumps(results))
 
 
-def handle_commit(commit, results, visited, to_visit):
+def handle_commit(commit, results):
     """Add the data from one commit to the data structure and add any unvisited non-pending parents to the list of
     nodes to explore."""
-    visited[commit.binsha] = True
-
     for parent in commit.parents:
         for diff in commit.diff(parent):
 
@@ -87,10 +88,6 @@ def handle_commit(commit, results, visited, to_visit):
                 results[diff.b_path][commit.author.email] = 0
 
             results[diff.b_path][commit.author.email] += 1
-
-        if parent.binsha not in visited and parent.binsha not in to_visit:
-            to_visit.append(parent)
-
 
 if __name__ == "__main__":
     main()
