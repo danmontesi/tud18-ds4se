@@ -10,8 +10,8 @@
 * Software component == file
 * Git Submodules are out of scope
 
-
-# Considerations
+# Future work
 * What about file renames?
 * What happens at a branch that is merged way later?
-* Do we need to exclude certain file types (e.g. .md)?
+* Do we need to exclude certain file types (e.g. `.md`)?
+* Can we improve performance?
