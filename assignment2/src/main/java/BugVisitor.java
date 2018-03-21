@@ -36,17 +36,24 @@ public class BugVisitor implements CommitVisitor {
                     for(DiffLine line : linesInThisFragment) {
                         if(line.getLine().trim().startsWith("/") || line.getLine().trim().startsWith("*")) {
                             // comment, ignore
-                        } else {
+                        } else if(line.getType() == DiffLineType.ADDED) {
+                            // added, ignore
+                        }
+                        else {
                             cleanLines.add(line.getLineNumber());
                         }
                     }
                 }
 
                 try {
-
-                    List<BlamedLine> blamedLines = repo.getScm().blame(m.getFileName(), commit.getHash(), true);
+                    // what about added / removed etc
+                    List<BlamedLine> blamedLines = repo.getScm().blame(m.getOldPath(), commit.getHash(), true);
 
                     for (BlamedLine blamed : blamedLines) {
+                        if(!cleanLines.contains(blamed.getLineNumber()) {
+                            continue;
+                        }
+
                         Calendar date = repo.getScm().getCommit(blamed.getCommit()).getDate();
 
                         if (date.before(notBefore) || date.after(notAfter)) {

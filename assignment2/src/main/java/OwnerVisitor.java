@@ -15,7 +15,6 @@ public class OwnerVisitor implements CommitVisitor {
     }
 
     public void process(SCMRepository repo, Commit commit, PersistenceMechanism writer) {
-
         for (Modification m : commit.getModifications()) {
             String filename = m.getNewPath();
             String oldFilename = m.getOldPath();
@@ -32,7 +31,7 @@ public class OwnerVisitor implements CommitVisitor {
                     int previousCommits = ownerMap.get(filename).getOrDefault(commit.getAuthor().toString(),0);
                     ownerMap.get(filename).put(commit.getAuthor().toString(),previousCommits+1);
                 }
-            }  else {
+            } else {
                 int previousCommits = 0;
                 if(ownerMap.get(filename) != null) {
                     previousCommits = ownerMap.get(filename).getOrDefault(commit.getAuthor().toString(),0);
@@ -41,11 +40,6 @@ public class OwnerVisitor implements CommitVisitor {
                 }
                 ownerMap.get(filename).put(commit.getAuthor().toString(),previousCommits+1);
             }
-            System.out.println("one down");
         }
-    }
-
-    public ConcurrentHashMap<String, ConcurrentHashMap<String, Integer>> getOwnerMap() {
-        return ownerMap;
     }
 }
