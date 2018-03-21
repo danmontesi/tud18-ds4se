@@ -26,7 +26,20 @@ public class BugVisitor implements CommitVisitor {
             return;
         }
 
-        outer: for(Modification m : commit.getModifications()) {
+        Calendar dateCommit = commit.getDate();
+        if (dateCommit.before(notBefore)) {
+            System.out.println("ignoring bugfix (not in the relevant time period / other branch)");
+            return;
+        }
+
+        Collection<Modification> mods = commit.getModifications();
+
+        if(mods.size() > 10) {
+            System.out.println("ignoring bugfix (too many files)");
+            return;
+        }
+
+        outer: for(Modification m : mods) {
             if(m.getAdded() + m.getRemoved() > 50) {
                 System.out.println("skipping huge diff");
                 continue;
@@ -53,11 +66,8 @@ public class BugVisitor implements CommitVisitor {
                     // what about added / removed etc
                     List<BlamedLine> blamedLines = repo.getScm().blame(m.getOldPath(), commit.getHash(), true);
 
-                    for (BlamedLine blamed : blamedLines) {
-                        if(!cleanLines.contains(blamed.getLineNumber())) {
-                            continue;
-                        }
-
+                    for(int i:cleanLines) {
+                        BlamedLine blamed = blamedLines.get(i-1);
                         String commitId = blamed.getCommit();
 
                         if(exclusions.contains(commitId)) {
@@ -79,7 +89,7 @@ public class BugVisitor implements CommitVisitor {
                     }
                 }
                 catch(Exception e) {
-                    System.out.println("this never happens (most of the time)");
+                    System.out.println("this never happens (most of the time)" + e.toString());
                 }
             }
         }
