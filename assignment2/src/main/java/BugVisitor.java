@@ -12,11 +12,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class BugVisitor implements CommitVisitor {
 
-    private Date notBefore;
-    private Date notAfter;
+    private Calendar notBefore;
+    private Calendar notAfter;
     private ConcurrentHashMap<String,Integer> defectsMap;
 
-    public BugVisitor(Date notBefore, Date notAfter, ConcurrentHashMap<String,Integer> defectsMap) {
+    public BugVisitor(Calendar notBefore, Calendar notAfter, ConcurrentHashMap<String,Integer> defectsMap) {
         this.notBefore  = notBefore;
         this.notAfter = notAfter;
         this.defectsMap = defectsMap;

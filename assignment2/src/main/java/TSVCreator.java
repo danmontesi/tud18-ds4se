@@ -12,7 +12,7 @@ public class TSVCreator {
         ConcurrentHashMap<String, Integer> defectsMap,
         ConcurrentHashMap<String, Integer> minorMap,
         ConcurrentHashMap<String, Integer> majorMap,
-        ConcurrentHashMap<String, Integer> ownershipMap) throws IOException {
+        ConcurrentHashMap<String, Double> ownershipMap) throws IOException {
 
             StringBuilder sb = new StringBuilder();
             sb.append("filename\tchurn\tsize\tminor\tmajor\ttotal\townership\tdefects\n");
