@@ -11,12 +11,12 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class RuStudy implements Study {
 
-    public static String earliestCommit = "e8a0123241f0d397d39cd18fcc4e5e7edde22730";
-    public static String commitAtRelease = "3d7cd77e442ce34eaac8a176ae8be17669498ebc";
-    public static String commitYearAfterRelease = "766bd11c8a3c019ca53febdcd77b2215379dd67d";
+    public static String earliestCommit = "3d7cd77e442ce34eaac8a176ae8be17669498ebc"; // dec 10 2015
+    public static String commitAtRelease = "e8a0123241f0d397d39cd18fcc4e5e7edde22730"; // dec 22 2016
+    public static String commitYearAfterRelease = "766bd11c8a3c019ca53febdcd77b2215379dd67d"; // jan 4 2018
 
     public static Calendar noBugsIntroducedBefore =  new GregorianCalendar(2016,11,22);
-    public static Calendar noBugsIntroducedAfter = new GregorianCalendar(2017,6,20)
+    public static Calendar noBugsIntroducedAfter = new GregorianCalendar(2017,5,22);
 
     public static void main(String[] args) {
         new RepoDriller().start(new RuStudy());
@@ -35,11 +35,11 @@ public class RuStudy implements Study {
         OwnerVisitor ownerVisitor = new OwnerVisitor(ownerMap);
 
         // churn, owner, size visitor
-        new RepositoryMining()
+        /* new RepositoryMining()
                 .in(GitRepository.singleProject("/home/michael/Documents/athens/rust-repo/rust"))
                 .through(Commits.range(earliestCommit, commitAtRelease))
                 .process(ownerVisitor).process(churnVisitor).process(sizeVisitor)
-                .mine();
+                .mine(); */
 
 
         // bug visitor

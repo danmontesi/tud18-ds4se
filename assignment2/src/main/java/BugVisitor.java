@@ -4,10 +4,7 @@ import org.repodriller.scm.BlamedLine;
 import org.repodriller.scm.CommitVisitor;
 import org.repodriller.scm.SCMRepository;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class BugVisitor implements CommitVisitor {
@@ -15,6 +12,8 @@ public class BugVisitor implements CommitVisitor {
     private Calendar notBefore;
     private Calendar notAfter;
     private ConcurrentHashMap<String,Integer> defectsMap;
+
+    private static Set<String> exclusions = new HashSet<>();
 
     public BugVisitor(Calendar notBefore, Calendar notAfter, ConcurrentHashMap<String,Integer> defectsMap) {
         this.notBefore  = notBefore;
@@ -28,6 +27,11 @@ public class BugVisitor implements CommitVisitor {
         }
 
         outer: for(Modification m : commit.getModifications()) {
+            if(m.getAdded() + m.getRemoved() > 50) {
+                System.out.println("skipping huge diff");
+                continue;
+            }
+
             if(m.getType() == ModificationType.MODIFY) {
                 List<Integer> cleanLines = new ArrayList<>();
                 List<List<DiffLine>> linesToBlame = linesToBlame(m.getDiff());
@@ -50,15 +54,24 @@ public class BugVisitor implements CommitVisitor {
                     List<BlamedLine> blamedLines = repo.getScm().blame(m.getOldPath(), commit.getHash(), true);
 
                     for (BlamedLine blamed : blamedLines) {
-                        if(!cleanLines.contains(blamed.getLineNumber()) {
+                        if(!cleanLines.contains(blamed.getLineNumber())) {
                             continue;
                         }
 
-                        Calendar date = repo.getScm().getCommit(blamed.getCommit()).getDate();
+                        String commitId = blamed.getCommit();
+
+                        if(exclusions.contains(commitId)) {
+                            System.out.print(".");
+                            continue;
+                        }
+
+                        Calendar date = repo.getScm().getCommit(commitId).getDate();
 
                         if (date.before(notBefore) || date.after(notAfter)) {
-                            // ignoring bugfix (not in the relevant time period)
+                            exclusions.add(commitId);
+                            System.out.println("ignoring bugfix (not in the relevant time period)");
                         } else {
+                            System.out.println("bingo");
                             int defectsNumber = defectsMap.getOrDefault(m.getFileName(), 0);
                             defectsMap.put(m.getFileName(), defectsNumber);
                             continue outer;
