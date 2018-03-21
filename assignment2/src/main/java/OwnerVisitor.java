@@ -33,7 +33,10 @@ public class OwnerVisitor implements CommitVisitor {
                     ownerMap.get(filename).put(commit.getAuthor().toString(),previousCommits+1);
                 }
             }  else {
-                int previousCommits = ownerMap.get(filename).getOrDefault(commit.getAuthor().toString(),0);
+                int previousCommits = 0;
+                if(ownerMap.get(filename) != null) {
+                    previousCommits = ownerMap.get(filename).getOrDefault(commit.getAuthor().toString(),0);
+                }
                 ownerMap.get(filename).put(commit.getAuthor().toString(),previousCommits+1);
             }
             System.out.println("one down");

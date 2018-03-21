@@ -28,18 +28,18 @@ public class RuStudy implements Study {
         SizeVisitor sizeVisitor = new SizeVisitor(sizeMap);
         OwnerVisitor ownerVisitor = new OwnerVisitor(ownerMap);
 
-        // owner visitor
+  /**      // owner visitor
         new RepositoryMining()
                 .in(GitRepository.singleProject("/home/michael/Documents/athens/rust-repo/rust"))
                 .through(Commits.range("e8a0123241f0d397d39cd18fcc4e5e7edde22730","3d7cd77e442ce34eaac8a176ae8be17669498ebc"))
                 .process(ownerVisitor, new CSVFile("/tmp/output.csv"))
                 .mine();
-
+**/
         // churn visitor
         new RepositoryMining()
                 .in(GitRepository.singleProject("/home/michael/Documents/athens/rust-repo/rust"))
                 .through(Commits.range("e8a0123241f0d397d39cd18fcc4e5e7edde22730","3d7cd77e442ce34eaac8a176ae8be17669498ebc"))
-                .process(churnVisitor, new CSVFile("/tmp/output.csv"))
+                .process(churnVisitor)
                 .mine();
 
 
@@ -47,7 +47,7 @@ public class RuStudy implements Study {
         new RepositoryMining()
                 .in(GitRepository.singleProject("/home/michael/Documents/athens/rust-repo/rust"))
                 .through(Commits.range("e8a0123241f0d397d39cd18fcc4e5e7edde22730","3d7cd77e442ce34eaac8a176ae8be17669498ebc"))
-                .process(sizeVisitor, new CSVFile("/tmp/output.csv"))
+                .process(sizeVisitor)
                 .mine();
 
 
@@ -55,7 +55,7 @@ public class RuStudy implements Study {
         new RepositoryMining()
                 .in(GitRepository.singleProject("/home/michael/Documents/athens/rust-repo/rust"))
                 .through(Commits.range("3d7cd77e442ce34eaac8a176ae8be17669498ebc", "766bd11c8a3c019ca53febdcd77b2215379dd67d"))
-                .process(bugVisitor, new CSVFile("/tmp/output.csv"))
+                .process(bugVisitor)
                 .mine();
 
         OwnershipCalculator oc = new OwnershipCalculator(ownerMap);
@@ -70,6 +70,4 @@ public class RuStudy implements Study {
             e.printStackTrace();
         }
     }
-
-
 }
