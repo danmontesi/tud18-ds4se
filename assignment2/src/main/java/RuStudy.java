@@ -31,14 +31,14 @@ public class RuStudy implements Study {
         // owner visitor
         new RepositoryMining()
                 .in(GitRepository.singleProject("/home/michael/Documents/athens/rust-repo/rust"))
-                .through(Commits.since(new GregorianCalendar(2016,0,0)))
+                .through(Commits.range("e8a0123241f0d397d39cd18fcc4e5e7edde22730","3d7cd77e442ce34eaac8a176ae8be17669498ebc"))
                 .process(ownerVisitor, new CSVFile("/tmp/output.csv"))
                 .mine();
 
         // churn visitor
         new RepositoryMining()
                 .in(GitRepository.singleProject("/home/michael/Documents/athens/rust-repo/rust"))
-                .through(Commits.since(new GregorianCalendar(2016,0,0)))
+                .through(Commits.range("e8a0123241f0d397d39cd18fcc4e5e7edde22730","3d7cd77e442ce34eaac8a176ae8be17669498ebc"))
                 .process(churnVisitor, new CSVFile("/tmp/output.csv"))
                 .mine();
 
@@ -46,7 +46,7 @@ public class RuStudy implements Study {
         // size visitor
         new RepositoryMining()
                 .in(GitRepository.singleProject("/home/michael/Documents/athens/rust-repo/rust"))
-                .through(Commits.since(new GregorianCalendar(2016,0,0)))
+                .through(Commits.range("e8a0123241f0d397d39cd18fcc4e5e7edde22730","3d7cd77e442ce34eaac8a176ae8be17669498ebc"))
                 .process(sizeVisitor, new CSVFile("/tmp/output.csv"))
                 .mine();
 
@@ -54,7 +54,7 @@ public class RuStudy implements Study {
         // bug visitor
         new RepositoryMining()
                 .in(GitRepository.singleProject("/home/michael/Documents/athens/rust-repo/rust"))
-                .through(Commits.since(new GregorianCalendar(2016,0,0)))
+                .through(Commits.range("e8a0123241f0d397d39cd18fcc4e5e7edde22730","3d7cd77e442ce34eaac8a176ae8be17669498ebc"))
                 .process(bugVisitor, new CSVFile("/tmp/output.csv"))
                 .mine();
 
