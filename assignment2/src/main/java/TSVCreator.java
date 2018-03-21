@@ -32,14 +32,7 @@ public class TSVCreator {
                 sb.append("\t");
                 sb.append(ownershipMap.get(key));
                 sb.append("\t");
-                sb.append(defectsMap.get(key));
-                sb.append("\n");
-            }
-
-            for(String key : defectsMap.keySet()) {
-                sb.append(key);
-                sb.append("\t");
-                sb.append(defectsMap.get(key));
+                sb.append(defectsMap.getOrDefault(key,0));
                 sb.append("\n");
             }
 
