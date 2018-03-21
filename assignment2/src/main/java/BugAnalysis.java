@@ -30,7 +30,7 @@ public class BugAnalysis extends  Thread {
         BugVisitor bugVisitor = new BugVisitor(noBugsIntroducedBefore, noBugsIntroducedAfter, defectsMap);
         // bug visitor
         new RepositoryMining()
-                .in(GitRepository.singleProject("/home/michael/Documents/athens/rust-repo/rust"))
+                .in(GitRepository.singleProject(repoPath))
                 .through(Commits.range(commitAtRelease, commitYearAfterRelease))
                 .process(bugVisitor)
                 .mine();
