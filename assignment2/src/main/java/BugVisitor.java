@@ -127,7 +127,8 @@ public class BugVisitor implements CommitVisitor {
     private static boolean isBugFixCommit(Commit commit) {
         String message = commit.getMsg();
         return (message.contains("fix") || message.contains("bug") || message.contains("repair")
-                || message.contains("resolves") || message.contains("correct"));
+                || message.contains("resolve") || message.contains("correct") || message.contains("error")
+                || message.contains("crash"));
     }
 
     /**
