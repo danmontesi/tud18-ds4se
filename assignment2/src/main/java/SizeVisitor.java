@@ -33,8 +33,4 @@ public class SizeVisitor implements CommitVisitor {
             }
         }
     }
-
-    public ConcurrentHashMap<String,Integer> getSizeMap() {
-        return sizeMap;
-    }
 }

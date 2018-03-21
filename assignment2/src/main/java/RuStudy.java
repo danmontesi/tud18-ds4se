@@ -23,7 +23,7 @@ public class RuStudy implements Study {
         ConcurrentHashMap<String, Integer> sizeMap  = new ConcurrentHashMap<>();
         ConcurrentHashMap<String, ConcurrentHashMap<String, Integer>> ownerMap = new ConcurrentHashMap<>();
 
-        BugVisitor bugVisitor = new BugVisitor(new GregorianCalendar(2016,0,1),new GregorianCalendar(2016,6,1), defectsMap);
+        BugVisitor bugVisitor = new BugVisitor(new GregorianCalendar(2016,11,22),new GregorianCalendar(2017,6,20), defectsMap);
         ChurnVisitor churnVisitor = new ChurnVisitor(churnMap);
         SizeVisitor sizeVisitor = new SizeVisitor(sizeMap);
         OwnerVisitor ownerVisitor = new OwnerVisitor(ownerMap);
@@ -54,7 +54,7 @@ public class RuStudy implements Study {
         // bug visitor
         new RepositoryMining()
                 .in(GitRepository.singleProject("/home/michael/Documents/athens/rust-repo/rust"))
-                .through(Commits.range("e8a0123241f0d397d39cd18fcc4e5e7edde22730","3d7cd77e442ce34eaac8a176ae8be17669498ebc"))
+                .through(Commits.range("3d7cd77e442ce34eaac8a176ae8be17669498ebc", "766bd11c8a3c019ca53febdcd77b2215379dd67d"))
                 .process(bugVisitor, new CSVFile("/tmp/output.csv"))
                 .mine();
 
