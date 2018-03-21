@@ -36,6 +36,8 @@ public class OwnerVisitor implements CommitVisitor {
                 int previousCommits = 0;
                 if(ownerMap.get(filename) != null) {
                     previousCommits = ownerMap.get(filename).getOrDefault(commit.getAuthor().toString(),0);
+                } else {
+                    ownerMap.put(filename, new ConcurrentHashMap<>());
                 }
                 ownerMap.get(filename).put(commit.getAuthor().toString(),previousCommits+1);
             }
