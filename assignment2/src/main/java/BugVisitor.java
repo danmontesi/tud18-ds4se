@@ -60,7 +60,7 @@ public class BugVisitor implements CommitVisitor {
                 continue;
             }
 
-            if(m.getType() == ModificationType.MODIFY) {
+            if(m.getType() != ModificationType.MODIFY) {
                 // Adding and deletion are not relevant for bugfixes
                 continue;
             }
@@ -104,8 +104,11 @@ public class BugVisitor implements CommitVisitor {
                         System.out.println("ignoring bugfix (not in the relevant time period)");
                     } else {
                         System.out.println("detected relevant bugfix");
-                        int defectsNumber = defectsMap.getOrDefault(m.getFileName(), 0);
-                        defectsMap.put(m.getFileName(), defectsNumber);
+                        int defectsNumber = defectsMap.getOrDefault(m.getOldPath(), 0);
+                        if(!m.getOldPath().equals(m.getNewPath())) {
+                            defectsNumber += defectsMap.getOrDefault(m.getNewPath(), 0);
+                        }
+                        defectsMap.put(m.getNewPath(), defectsNumber+1);
                         continue outer; // to avoid identifying multiple defects in the same file
                     }
                 }

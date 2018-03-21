@@ -36,6 +36,13 @@ public class TSVCreator {
                 sb.append("\n");
             }
 
+            for(String key : defectsMap.keySet()) {
+                sb.append(key);
+                sb.append("\t");
+                sb.append(defectsMap.get(key));
+                sb.append("\n");
+            }
+
             File file = new File(filename);
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                 writer.write(sb.toString());
