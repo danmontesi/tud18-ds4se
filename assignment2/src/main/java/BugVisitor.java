@@ -42,18 +42,24 @@ public class BugVisitor implements CommitVisitor {
                     }
                 }
 
-                List<BlamedLine> blamedLines = repo.getScm().blame(m.getFileName(), commit.getHash(), true);
+                try {
 
-                for(BlamedLine blamed:blamedLines) {
-                    Calendar date = repo.getScm().getCommit(blamed.getCommit()).getDate();
+                    List<BlamedLine> blamedLines = repo.getScm().blame(m.getFileName(), commit.getHash(), true);
 
-                    if(date.before(notBefore) || date.after(notAfter)) {
-                        // ignoring bugfix (not in the relevant time period)
-                    } else {
-                        int defectsNumber = defectsMap.getOrDefault(m.getFileName(),0);
-                        defectsMap.put(m.getFileName(), defectsNumber);
-                        continue outer;
+                    for (BlamedLine blamed : blamedLines) {
+                        Calendar date = repo.getScm().getCommit(blamed.getCommit()).getDate();
+
+                        if (date.before(notBefore) || date.after(notAfter)) {
+                            // ignoring bugfix (not in the relevant time period)
+                        } else {
+                            int defectsNumber = defectsMap.getOrDefault(m.getFileName(), 0);
+                            defectsMap.put(m.getFileName(), defectsNumber);
+                            continue outer;
+                        }
                     }
+                }
+                catch(Exception e) {
+                    System.out.println("this never happens (most of the time)");
                 }
             }
         }
