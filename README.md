@@ -91,7 +91,25 @@ F-statistic: 1.17e+03 on 3 and 5591 DF,  p-value: <2e-16
 
 The adjusted r^2 is poor at 0.386.
 
-Combining both control and independant variables does not meaningfully improve the adjusted r^2 (0.502).
+Combining both control and independent variables does not meaningfully improve the adjusted r^2 (0.502). The only IV that is significant is minor with a p-value < 0.001.
+
+```
+Coefficients: (1 not defined because of singularities)
+                      Estimate Std. Error t value Pr(>|t|)    
+(Intercept)          -1.69e-01   1.16e-01   -1.47     0.14    
+cleaned_ds$churn      8.78e-04   3.19e-05   27.49   <2e-16 ***
+cleaned_ds$size       1.23e-03   9.84e-05   12.51   <2e-16 ***
+cleaned_ds$minor      6.39e-02   6.74e-03    9.47   <2e-16 ***
+cleaned_ds$major      2.34e-02   1.69e-02    1.38     0.17    
+cleaned_ds$total            NA         NA      NA       NA    
+cleaned_ds$ownership  9.51e-02   1.14e-01    0.84     0.40    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.57 on 5589 degrees of freedom
+Multiple R-squared:  0.503,	Adjusted R-squared:  0.502 
+F-statistic: 1.13e+03 on 5 and 5589 DF,  p-value: <2e-16
+```
 
 Running a 5-fold cross-validation on the combined model yields a RSS of 2.6 and a mean square of 2.14. The generated model seems to be quite robust.
 
