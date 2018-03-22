@@ -56,13 +56,38 @@ The total number of files after filtering is 5595. There was a total of 2335 bug
 
 First, we consider the number of *post-release bugs* in a file as a function of the control variables *churn* and *LoC*. We find positive correlations of both features with *post-release bugs*. These correlations are highly significant (p < 0.001). 
 
-// output
+```Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)      -3.66e-02   2.26e-02   -1.62      0.1    
+cleaned_ds$churn  1.04e-03   2.72e-05   38.31   <2e-16 ***
+cleaned_ds$size   1.60e-03   9.14e-05   17.52   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.58 on 5592 degrees of freedom
+Multiple R-squared:  0.494,	Adjusted R-squared:  0.494 
+F-statistic: 2.73e+03 on 2 and 5592 DF,  p-value: <2e-16
+```
 
 The coefficient of determination (adjusted r^2) is 0.494.
 
 Next, we analyze the number of *post-release bugs* in a file as a function of just the independent variables *minor*, *major*, *ownership*, and *total*. We find highly-significant positive correlations for major and minor to the number of post-release bugs and a significant correlation between ownership and post-release bugs. Total as the sum of major and minor is ignored.
 
-//output
+```
+Coefficients: (1 not defined because of singularities)
+                     Estimate Std. Error t value Pr(>|t|)    
+(Intercept)          -0.39452    0.12820   -3.08  0.00210 ** 
+cleaned_ds$minor      0.25760    0.00448   57.51  < 2e-16 ***
+cleaned_ds$major      0.06915    0.01871    3.70  0.00022 ***
+cleaned_ds$ownership  0.38927    0.12610    3.09  0.00203 ** 
+cleaned_ds$total           NA         NA      NA       NA    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.74 on 5591 degrees of freedom
+Multiple R-squared:  0.386,	Adjusted R-squared:  0.386 
+F-statistic: 1.17e+03 on 3 and 5591 DF,  p-value: <2e-16
+```
 
 The adjusted r^2 is poor at 0.386.
 
