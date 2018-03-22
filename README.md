@@ -68,7 +68,7 @@ The adjusted r^2 is poor at 0.386.
 
 Combining both control and independant variables does not meaningfully improve the adjusted r^2 (0.502).
 
-Running a 5-fold cross-validation on the combined model yields a mean-square of 2.6. The generated model seems to be quite robust.
+Running a 5-fold cross-validation on the combined model yields a RSS of 2.6 and a mean square of 2.14. The generated model seems to be quite robust.
 
 // picture
 
@@ -79,4 +79,3 @@ Running a 5-fold cross-validation on the combined model yields a mean-square of 
 
 We do however believe that our result might very well be caused by a suboptimal method for finding post-release bugs.
 In the future, it would be meaningful to consider maybe issues from the bugtracker and link them to the code via the issue number
-
