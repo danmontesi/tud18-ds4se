@@ -50,15 +50,29 @@ In order to analyze only code containing components, we decided to choose only f
 ## Analysis
 To perform the analysis, we employed R to generate a multilinear regression model. To validate that our findings were actually significant, we compared our model with a model using just the control variable.
 
-The total number of files after filtering is 5595. There was a total of 2335 bugs in those files.
+The total number of files after filtering is 5595. There was a total of 2335 bugs spread across 477 files.
+
+// Histogram
 
 First, we consider the number of *post-release bugs* in a file as a function of the control variables *churn* and *LoC*. We find positive correlations of both features with *post-release bugs*. These correlations are highly significant (p < 0.001). 
 
-####
+// output
 
 The coefficient of determination (adjusted r^2) is 0.494.
 
-Next, we analyze the number of *post-release bugs* in a file as a function of the independent variables *minor*, *major*, *ownership*, and *total*.
+Next, we analyze the number of *post-release bugs* in a file as a function of just the independent variables *minor*, *major*, *ownership*, and *total*. We find highly-significant positive correlations for major and minor to the number of post-release bugs and a significant correlation between ownership and post-release bugs. Total as the sum of major and minor is ignored.
+
+//output
+
+The adjusted r^2 is poor at 0.386.
+
+Combining both control and independant variables does not meaningfully improve the adjusted r^2 (0.502).
+
+Running a 5-fold cross-validation on the combined model yields a mean-square of 2.6. The generated model seems to be quite robust.
+
+// picture
+
+// what does total on its own give us?
 
 
 **Our analysis did not show meaningful improvements compared to the control variables. We could therefore not show that in Rust there is a influence of the ownership parameters as compared to just the control variables**. 
