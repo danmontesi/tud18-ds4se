@@ -113,7 +113,7 @@ F-statistic: 1.13e+03 on 5 and 5589 DF,  p-value: <2e-16
 
 Running a 5-fold cross-validation on the combined model yields a RSS of 2.6 and a mean square of 2.14. The generated model seems to be quite robust.
 
-![cross validation](https://raw.githubusercontent.com/seeba8/tud18-ds4se/master/assignment3/crossvalidation.png)
+![cross validation](https://github.com/seeba8/tud18-ds4se/blob/master/assignment3/crossvalidation.png?raw=true)
 
 // what does total on its own give us?
 
