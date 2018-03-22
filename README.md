@@ -8,8 +8,8 @@
 
 ## System under analysis
 We considered the repository of the Rust programming language https://github.com/rust-lang/rust for our analysis.
-T
-he range we considered was between commits `3d7cd77e442ce34eaac8a176ae8be17669498ebc` (12/10/15) and `e8a0123241f0d397d39cd18fcc4e5e7edde22730` (12/22/16).
+
+The range we considered was between commits `3d7cd77e442ce34eaac8a176ae8be17669498ebc` (12/10/15) and `e8a0123241f0d397d39cd18fcc4e5e7edde22730` (12/22/16).
 This corresponds to version 1.14.0 and all the changes in the year before leading up to it.
 
 This was used to calculate the various measures of ownership (see Microsoft paper) and the control variables churn and size.
