@@ -7,12 +7,13 @@
 * Sebastian Ober (Technische Universität München) <sebastian.ober@tum.de>
 
 ## Introduction
-Project is part of Data Science for Software Engineering course during Athens Student Exchange Programme, March '18 edition. Course is led by Alberto Bacchelli, Professor of Empirical Software Engineering at the University of Zurich (UZH), Switzerland. Main objective of the project was to perform a study of influence of ownership on number of defects in program code. It was inspired by work "Don’t Touch My Code! Examining the Effects of Ownership on Software Quality" by Bird et al. (2011). 
-Project's scope is divided into four assignments:
-1. Calculate minor, major, total and ownership parameters (as described in "Don't Touch My Code!") for components in selected GitHub repository.
-2. Calculate churn and size paramerters (as described in "Don't Touch My Code!") for components in selected GitHub repository. Find number of defects in every file discovered in post-release period.
-3. Perform linear regression analysis and cross-validation for obtained parameters to check if they are significantly influential on number of defects in code.
+The project is part of the Data Science for Software Engineering course during Athens Student Exchange Programme, March '18 edition. The course is led by Alberto Bacchelli, Professor of Empirical Software Engineering at the University of Zurich (UZH), Switzerland. The main objective of the project was to perform a study of the influence of ownership on the number of defects in program code. It was inspired by the work "Don’t Touch My Code! Examining the Effects of Ownership on Software Quality" by Bird et al. (2011). 
+The project's scope is divided into four assignments:
+1. Calculate minor, major, total and ownership features (as described in "Don't Touch My Code!") for components in selected GitHub repository.
+2. Calculate churn and size features (as described in "Don't Touch My Code!") for components in selected Git repository. Find number of defects in every file discovered in post-release period.
+3. Perform linear regression analysis and cross-validation for obtained feautures to check if they are significantly influential on number of defects in code.
 4. TBC
+
 The final goal was to prepare a presentation of results of analysis, compare it with "Don't Touch My Code!" and form conclusions. 
 
 ## Description of work and operational decisions
@@ -44,6 +45,11 @@ In order to analyze only code containing components, we decided to choose only f
 * .json
 * .tuml
 * .mk
+
+## Analysis
+To perform the analysis, we employed R. To ficlidate that our findings were actually significant, we compared our model with a model using just the control variables.
+Our analysis did not show meaningful improvements compared to the control variables. We could therefore not show that in Rust there is a influence of the ownerhsip parameters as compared to just the control variables. We do however believe that our result might very well be caused by a suboptimal method for finding post-release bugs.
+In the future, it would be meaningful to consider maybe issues from the bugtracker and link them to the code via the issue number
 
 ## Design decisions
 * Software component == file
