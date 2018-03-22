@@ -1,20 +1,31 @@
 # tud18-ds4se (Data Science for Software Engineering during Athens Week March '18 at TU DELFT)
 
-## Group members:
+## Group members
 * Daniele Montesi (Politechnico di Milano) <daniele.montesi@mail.polimi.it>
 * Maciej Kedzielski (Politechnika Warszawska) <m.a.kedzielski@stud.elka.pw.edu.pl>
 * Michael Schwarz  (Technische Universität München) <m.schwarz@tum.de>
 * Sebastian Ober (Technische Universität München) <sebastian.ober@tum.de>
 
-## System under analysis
-We considered the repository of the Rust programming language https://github.com/rust-lang/rust for our analysis.
+## Introduction
+Project is part of Data Science for Software Engineering course during Athens Student Exchange Programme, March '18 edition. Course is led by Alberto Bacchelli, Professor of Empirical Software Engineering at the University of Zurich (UZH), Switzerland. Main objective of the project was to perform a study of influence of ownership on number of defects in program code. It was inspired by work "Don’t Touch My Code! Examining the Effects of Ownership on Software Quality" by Bird et al. (2011). 
+Project's scope is divided into four assignments:
+1. Calculate minor, major, total and ownership parameters (as described in "Don't Touch My Code!") for components in selected GitHub repository.
+2. Calculate churn and size paramerters (as described in "Don't Touch My Code!") for components in selected GitHub repository. Find number of defects in every file discovered in post-release period.
+3. Perform linear regression analysis and cross-validation for obtained parameters to check if they are significantly influential on number of defects in code.
+4. TBC
+The final goal was to prepare a presentation of results of analysis, compare it with "Don't Touch My Code!" and form conclusions. 
 
-The range we considered was between commits `3d7cd77e442ce34eaac8a176ae8be17669498ebc` (12/10/15) and `e8a0123241f0d397d39cd18fcc4e5e7edde22730` (12/22/16).
-This corresponds to version 1.14.0 and all the changes in the year before leading up to it.
+## Description of work and operational decisions
+We considered the repository of the Rust programming language https://github.com/rust-lang/rust for our analysis. Rust is an open-source programing language, aimed on prevention of segmentation faults and thread safety.
 
-This was used to calculate the various measures of ownership (see Microsoft paper) and the control variables churn and size.
+As a component we considered single file. It was motivated by clear segregation of project modules into files and not complicated ways of mining statisctics and parameters of a GitHub file. 
 
-To obtain the  number of post-release bugs, we considered all commits starting from the release until `766bd11c8a3c019ca53febdcd77b2215379dd67d`(01/04/18). To get an estimate of the number of bugs, we looked for commit messages containing words such as fix, bug, etc. We then used blame to find out when the changes were introduced. If they were introduced in the time period between release and 06/22/2017 we consider them to be post-release bugs.
+The range of dates we considered was between commits `3d7cd77e442ce34eaac8a176ae8be17669498ebc` (12/10/15) and `e8a0123241f0d397d39cd18fcc4e5e7edde22730` (12/22/16).
+This corresponds to release version 1.14.0 and all the changes in the year before leading up to it.
+
+Mentioned period was considered in calculations of minor, major, total and ownership parameters (as described in "Don't Touch My Code"), as well as the control variables: churn and size. Churn is the sum of added and deleted lines in a file during the whole considered period. Size of a file is number of lines in a file at the moment of version 1.14.0 release.
+
+To obtain the number of post-release bugs, we considered all commits starting from the release 1.14.0 until release `766bd11c8a3c019ca53febdcd77b2215379dd67d`(01/04/18). To get an estimate of the number of bugs, we looked for commit messages containing words related to bug fixing, such as fix, bug, correction, etc. Then we used blame function to find out when the changes were introduced. If they were introduced in the time period between release and 06/22/2017 (6 months after) we considered them to be post-release bugs.
 
 File renames were considered. To track them we used functionality of RepoDriller that allows checking old and new name of every file in a commit. 
 
