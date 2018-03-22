@@ -1,0 +1,74 @@
+> modelc <- lm(cleaned_ds$defects ~ cleaned_ds$churn + cleaned_ds$size)
+> summary(modelc)
+
+Call:
+lm(formula = cleaned_ds$defects ~ cleaned_ds$churn + cleaned_ds$size)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-18.43  -0.09  -0.03   0.00  40.17 
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)    
+(Intercept)      -3.66e-02   2.26e-02   -1.62      0.1    
+cleaned_ds$churn  1.04e-03   2.72e-05   38.31   <2e-16 ***
+cleaned_ds$size   1.60e-03   9.14e-05   17.52   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.58 on 5592 degrees of freedom
+Multiple R-squared:  0.494,	Adjusted R-squared:  0.494 
+F-statistic: 2.73e+03 on 2 and 5592 DF,  p-value: <2e-16
+
+> modeli <- lm(cleaned_ds$defects ~ cleaned_ds$minor + cleaned_ds$major + cleaned_ds$ownership + cleaned_ds$total)
+> summary(modeli)
+
+Call:
+lm(formula = cleaned_ds$defects ~ cleaned_ds$minor + cleaned_ds$major + 
+    cleaned_ds$ownership + cleaned_ds$total)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-10.10  -0.06  -0.06   0.02  57.10 
+
+Coefficients: (1 not defined because of singularities)
+                     Estimate Std. Error t value Pr(>|t|)    
+(Intercept)          -0.39452    0.12820   -3.08  0.00210 ** 
+cleaned_ds$minor      0.25760    0.00448   57.51  < 2e-16 ***
+cleaned_ds$major      0.06915    0.01871    3.70  0.00022 ***
+cleaned_ds$ownership  0.38927    0.12610    3.09  0.00203 ** 
+cleaned_ds$total           NA         NA      NA       NA    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.74 on 5591 degrees of freedom
+Multiple R-squared:  0.386,	Adjusted R-squared:  0.386 
+F-statistic: 1.17e+03 on 3 and 5591 DF,  p-value: <2e-16
+
+> model <- lm(cleaned_ds$defects ~ cleaned_ds$churn + cleaned_ds$size + cleaned_ds$minor + cleaned_ds$major + cleaned_ds$total + cleaned_ds$ownership)
+> summary(model)
+
+Call:
+lm(formula = cleaned_ds$defects ~ cleaned_ds$churn + cleaned_ds$size + 
+    cleaned_ds$minor + cleaned_ds$major + cleaned_ds$total + 
+    cleaned_ds$ownership)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-16.89  -0.08   0.00   0.02  42.31 
+
+Coefficients: (1 not defined because of singularities)
+                      Estimate Std. Error t value Pr(>|t|)    
+(Intercept)          -1.69e-01   1.16e-01   -1.47     0.14    
+cleaned_ds$churn      8.78e-04   3.19e-05   27.49   <2e-16 ***
+cleaned_ds$size       1.23e-03   9.84e-05   12.51   <2e-16 ***
+cleaned_ds$minor      6.39e-02   6.74e-03    9.47   <2e-16 ***
+cleaned_ds$major      2.34e-02   1.69e-02    1.38     0.17    
+cleaned_ds$total            NA         NA      NA       NA    
+cleaned_ds$ownership  9.51e-02   1.14e-01    0.84     0.40    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.57 on 5589 degrees of freedom
+Multiple R-squared:  0.503,	Adjusted R-squared:  0.502 
+F-statistic: 1.13e+03 on 5 and 5589 DF,  p-value: <2e-16
