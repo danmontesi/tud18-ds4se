@@ -14,7 +14,11 @@ This corresponds to version 1.14.0 and all the changes in the year before leadin
 
 This was used to calculate the various measures of ownership (see Microsoft paper) and the control variables churn and size.
 
-To obtain the  number of post-release bugs, we considered all commist starting from the release until `766bd11c8a3c019ca53febdcd77b2215379dd67d`(01/04/18). To get an estimate of the number of bugs, we looked for commit messages containing words such as fix, bug, etc. We then used blame to find out when the changes were introduced. If they were introduced in the time period between release and 06/22/2017 we consider them to be post-release bugs.
+To obtain the  number of post-release bugs, we considered all commits starting from the release until `766bd11c8a3c019ca53febdcd77b2215379dd67d`(01/04/18). To get an estimate of the number of bugs, we looked for commit messages containing words such as fix, bug, etc. We then used blame to find out when the changes were introduced. If they were introduced in the time period between release and 06/22/2017 we consider them to be post-release bugs.
+
+File renames were considered. To track them we used functionality of RepoDriller that allows checking old and new name of every file in a commit.
+
+During GitHub mining process we 
 
 ## Design decisions
 * Software component == file
