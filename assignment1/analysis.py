@@ -53,7 +53,7 @@ def calculate_features(results):
 
 
 def run_analysis():
-    """Crawl the repoistory and build data structure for number of changes per file per author.
+    """Crawl the repository and build data structure for number of changes per file per author.
     Saves json to INTERMEDIATE_RES_PATH (dict<filename,dict<author, #commits by author>>)"""
     repo = Repo(REPO_PATH)
 
