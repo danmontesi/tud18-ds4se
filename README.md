@@ -25,7 +25,7 @@ The range of dates we considered was between commits `3d7cd77e442ce34eaac8a176ae
 This corresponds to release version 1.14.0 and all the changes in the year before leading up to it.
 We did not analyze submodules that were included in main project. 
 
-Mentioned period was considered in calculations of minor, major, total and ownership parameters (as described in "Don't Touch My Code"), as well as the control variables: churn and size. Churn is the sum of added and deleted lines in a file during the whole considered period. Size of a file is number of lines in a file at the moment of version 1.14.0 release.
+Mentioned period was considered in calculations of minor, major, total and ownership parameters (as described in "Don't Touch My Code"), as well as the control variables: churn size (churn) and Lines of Code (LoC). Churn is the sum of added and deleted lines in a file during the whole considered period. LoC are measured at the moment of version 1.14.0 release.
 
 To obtain the number of post-release bugs, we considered all commits starting from the release 1.14.0 until release `766bd11c8a3c019ca53febdcd77b2215379dd67d`(01/04/18). To get an estimate of the number of bugs, we looked for commit messages containing words related to bug fixing, such as fix, bug, correction, etc. Then we used blame function to find out when the changes were introduced. If they were introduced in the time period between release and 06/22/2017 (6 months after) we considered them to be post-release bugs. In blame function we skipped lines considered as comments, e.g. starting with '/' or '\*'. 
 
@@ -48,7 +48,18 @@ In order to analyze only code containing components, we decided to choose only f
 * .mk
 
 ## Analysis
-To perform the analysis, we employed R to generate a multilinear regression model. To validate that our findings were actually significant, we compared our model with a model using just the control variables.
+To perform the analysis, we employed R to generate a multilinear regression model. To validate that our findings were actually significant, we compared our model with a model using just the control variable.
+
+The total number of files after filtering is 5595. There was a total of 2335 bugs in those files.
+
+First, we consider the number of *post-release bugs* in a file as a function of the control variables *churn* and *LoC*. We find positive correlations of both features with *post-release bugs*. These correlations are highly significant (p < 0.001). 
+
+####
+
+The coefficient of determination (adjusted r^2) is 0.494.
+
+Next, we analyze the number of *post-release bugs* in a file as a function of the independent variables *minor*, *major*, *ownership*, and *total*.
+
 
 **Our analysis did not show meaningful improvements compared to the control variables. We could therefore not show that in Rust there is a influence of the ownership parameters as compared to just the control variables**. 
 
