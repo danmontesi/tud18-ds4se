@@ -23,10 +23,11 @@ As a component we considered single file. It was motivated by clear segregation 
 
 The range of dates we considered was between commits `3d7cd77e442ce34eaac8a176ae8be17669498ebc` (12/10/15) and `e8a0123241f0d397d39cd18fcc4e5e7edde22730` (12/22/16).
 This corresponds to release version 1.14.0 and all the changes in the year before leading up to it.
+We did not analyze submodules that were included in main project. 
 
 Mentioned period was considered in calculations of minor, major, total and ownership parameters (as described in "Don't Touch My Code"), as well as the control variables: churn and size. Churn is the sum of added and deleted lines in a file during the whole considered period. Size of a file is number of lines in a file at the moment of version 1.14.0 release.
 
-To obtain the number of post-release bugs, we considered all commits starting from the release 1.14.0 until release `766bd11c8a3c019ca53febdcd77b2215379dd67d`(01/04/18). To get an estimate of the number of bugs, we looked for commit messages containing words related to bug fixing, such as fix, bug, correction, etc. Then we used blame function to find out when the changes were introduced. If they were introduced in the time period between release and 06/22/2017 (6 months after) we considered them to be post-release bugs.
+To obtain the number of post-release bugs, we considered all commits starting from the release 1.14.0 until release `766bd11c8a3c019ca53febdcd77b2215379dd67d`(01/04/18). To get an estimate of the number of bugs, we looked for commit messages containing words related to bug fixing, such as fix, bug, correction, etc. Then we used blame function to find out when the changes were introduced. If they were introduced in the time period between release and 06/22/2017 (6 months after) we considered them to be post-release bugs. In blame function we skipped lines considered as comments, e.g. starting with '/' or '\*'. 
 
 File renames were considered. To track them we used functionality of RepoDriller that allows checking old and new name of every file in a commit. 
 
@@ -47,14 +48,10 @@ In order to analyze only code containing components, we decided to choose only f
 * .mk
 
 ## Analysis
-To perform the analysis, we employed R. To ficlidate that our findings were actually significant, we compared our model with a model using just the control variables.
-Our analysis did not show meaningful improvements compared to the control variables. We could therefore not show that in Rust there is a influence of the ownerhsip parameters as compared to just the control variables. We do however believe that our result might very well be caused by a suboptimal method for finding post-release bugs.
+To perform the analysis, we employed R to generate a multilinear regression model. To validate that our findings were actually significant, we compared our model with a model using just the control variables.
+
+**Our analysis did not show meaningful improvements compared to the control variables. We could therefore not show that in Rust there is a influence of the ownership parameters as compared to just the control variables**. 
+
+We do however believe that our result might very well be caused by a suboptimal method for finding post-release bugs.
 In the future, it would be meaningful to consider maybe issues from the bugtracker and link them to the code via the issue number
 
-## Design decisions
-* Software component == file
-* Git Submodules are out of scope
-* Exclude lines of code starting with '/' or '\*', considering them as comments 
-
-# Future work
-* Prepare linear regression models for acquired data
