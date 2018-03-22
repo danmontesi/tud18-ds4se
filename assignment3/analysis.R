@@ -66,3 +66,15 @@ library(DAAG)
 cvmodel <- cv.lm(cleaned_ds, m = 5,form.lm = formula(defects ~ churn + size + minor + major + total + ownership))
 summary(cvmodel)
 
+#hists #####
+hist(cleaned_ds$defects[cleaned_ds$defects>0 & cleaned_ds$defects<30],breaks = 28)
+hist(cleaned_ds$size[cleaned_ds$size>0],breaks = 50)
+hist(cleaned_ds$size[cleaned_ds$size>150],breaks = 50)
+
+# total vs defects ###
+totalmodel <- lm(cleaned_ds$defects ~ cleaned_ds$total)
+summary(totalmodel)
+#overlord churn ####
+churnmodel <- lm(cleaned_ds$defects ~ cleaned_ds$churn)
+plot(cleaned_ds$defects ~ cleaned_ds$churn)
+abline(churnmodel,col="red")
