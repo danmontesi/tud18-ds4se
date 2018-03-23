@@ -2,7 +2,7 @@
 
 ## Group members
 * Daniele Montesi (Politecnico di Milano) <daniele.montesi@mail.polimi.it>
-* Maciej Kedzielski (Politechnika Warszawska) <m.a.kedzielski@stud.elka.pw.edu.pl>
+* Maciej Kędzielski (Politechnika Warszawska) <m.a.kedzielski@stud.elka.pw.edu.pl>
 * Michael Schwarz  (Technische Universität München) <m.schwarz@tum.de>
 * Sebastian Ober (Technische Universität München) <sebastian.ober@tum.de>
 
@@ -12,9 +12,7 @@ The project's scope is divided into four assignments:
 1. Calculate minor, major, total and ownership features (as described in "Don't Touch My Code!") for components in selected GitHub repository.
 2. Calculate churn and size features (as described in "Don't Touch My Code!") for components in selected Git repository. Find number of defects in every file discovered in post-release period.
 3. Perform linear regression analysis and cross-validation for obtained feautures to check if they are significantly influential on number of defects in code.
-4. Prepare a presentation of the results
-
-The final goal was to prepare a presentation of results of analysis, compare it with "Don't Touch My Code!" and form conclusions. 
+4. Prepare a presentation of the results of analysis, compare it with "Don't Touch My Code!" and form conclusions. Finish unfinished work, push it to GitHub and write a report.
 
 ## Description of work and operational decisions
 We considered the repository of the Rust programming language https://github.com/rust-lang/rust for our analysis. 
@@ -52,7 +50,7 @@ In order to analyze only code containing components, we decided to choose only f
 To perform the analysis, we employed R to generate a multilinear regression model. To validate that our findings were actually significant, we compared our model with a model using just the control variable.
 
 To first obtain a feeling for the data, we generate a pair polt and analyse outliers. This is the cleaned version after removing obvious outliers such as non-code files. We integrate this step in the in our preprocessing.
-![Pair plot](https://github.com/seeba8/t ud18-ds4se/blob/master/assignment3/pairplot.png?raw=true)
+![Pair plot](https://github.com/seeba8/tud18-ds4se/blob/master/assignment3/pairplot.png?raw=true)
 
 The total number of files after filtering is 5595. There was a total of 2335 bugs spread across 477 files.
 
@@ -74,7 +72,7 @@ Multiple R-squared:  0.494,	Adjusted R-squared:  0.494
 F-statistic: 2.73e+03 on 2 and 5592 DF,  p-value: <2e-16
 ```
 
-The coefficient of determination (adjusted r^2) is 0.494.
+The coefficient of determination (adjusted r^2) is 0.494. Therefore the linear model would not give precise predictions of number of future bugs with respect to control variables.
 
 Next, we analyze the number of *post-release bugs* in a file as a function of just the independent variables *minor*, *major*, *ownership*, and *total*. We find highly-significant positive correlations for major and minor to the number of post-release bugs and a significant correlation between ownership and post-release bugs. Total as the sum of major and minor is ignored.
 
@@ -94,9 +92,9 @@ Multiple R-squared:  0.386,	Adjusted R-squared:  0.386
 F-statistic: 1.17e+03 on 3 and 5591 DF,  p-value: <2e-16
 ```
 
-The adjusted r^2 is poor at 0.386.
+The adjusted r^2 is poor at 0.386. It indicates that used model for independent variables is not supposed to provide accurate prediction on future code defects and in this matter using control variablers model should be better.
 
-Combining both control and independent variables does not meaningfully improve the adjusted r^2 (0.502). The only IV that is significant is minor with a p-value < 0.001.
+Combining both control and independent variables does not meaningfully improve the adjusted r^2 (0.502). The only IV that is significant is minor with a p-value < 0.001. We can observe that including both control and independent variables in multilinear regression model increases the value of r^2 compared to the values for these groups of variables alone. However, the increase with respect to model including only control viariables is relatively small. The difference value is 0.008, which is less than 2% of relative increase. We can then conclude that, according to study of Rust project, considering ownership parameters in the process of creating code can lead to decrease in number of defects, but the change would not be significant.
 
 ```
 Coefficients: (1 not defined because of singularities)
@@ -116,7 +114,20 @@ Multiple R-squared:  0.503,	Adjusted R-squared:  0.502
 F-statistic: 1.13e+03 on 5 and 5589 DF,  p-value: <2e-16
 ```
 
+The interesting observation was that ownership viariable did have positive influence on multilinear model, when we were expecting it to be negative, as it was shown in "Don't Touch My Code!" work. However, it can be explained by low significance of this variable in multilinear model. Applying linear regression in terms of number of defects to only ownership variable shown that if it is the only factor, the influence is negative. 
+
+'''
+ownership coef
+'''
+
+![ownership coef]()
+
+
 Running a 5-fold cross-validation on the combined model yields a RSS of 2.6 and a mean square of 2.14. The generated model seems to be quite robust.
+
+'''
+cross-validation coef
+'''
 
 ![cross validation](https://github.com/seeba8/tud18-ds4se/blob/master/assignment3/crossvalidation.png?raw=true)
 
