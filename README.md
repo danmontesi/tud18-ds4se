@@ -49,11 +49,12 @@ In order to analyze only code containing components, we decided to choose only f
 
 ## Analysis
 To perform the analysis, we employed R to generate a multilinear regression model. To validate that our findings were actually significant, we compared our model with a model using just the control variable.
-![Pair plot](https://github.com/seeba8/tud18-ds4se/blob/master/assignment3/pairplot.png?raw=true)
+![Pair plot](https://github.com/seeba8/t ud18-ds4se/blob/master/assignment3/pairplot.png?raw=true)
 
 The total number of files after filtering is 5595. There was a total of 2335 bugs spread across 477 files.
 
-// Histogram
+![Histogram](https://github.com/seeba8/tud18-ds4se/blob/master/assignment3/hist_defects_l_30.png?raw=true)
+Histogram of the number of *post-relase bugs* in files containing at least one.
 
 First, we consider the number of *post-release bugs* in a file as a function of the control variables *churn* and *LoC*. We find positive correlations of both features with *post-release bugs*. These correlations are highly significant (p < 0.001). 
 
