@@ -12,7 +12,7 @@ The project's scope is divided into four assignments:
 1. Calculate minor, major, total and ownership features (as described in "Don't Touch My Code!") for components in selected GitHub repository.
 2. Calculate churn and size features (as described in "Don't Touch My Code!") for components in selected Git repository. Find number of defects in every file discovered in post-release period.
 3. Perform linear regression analysis and cross-validation for obtained feautures to check if they are significantly influential on number of defects in code.
-4. TBC
+4. Prepare a presentation of the results
 
 The final goal was to prepare a presentation of results of analysis, compare it with "Don't Touch My Code!" and form conclusions. 
 
@@ -49,6 +49,8 @@ In order to analyze only code containing components, we decided to choose only f
 
 ## Analysis
 To perform the analysis, we employed R to generate a multilinear regression model. To validate that our findings were actually significant, we compared our model with a model using just the control variable.
+
+To first obtain a feeling for the data, we generate a pair polt and analyse outliers. This is the cleaned version after removing obvious outliers such as non-code files. We integrate this step in the in our preprocessing.
 ![Pair plot](https://github.com/seeba8/t ud18-ds4se/blob/master/assignment3/pairplot.png?raw=true)
 
 The total number of files after filtering is 5595. There was a total of 2335 bugs spread across 477 files.
@@ -116,9 +118,6 @@ F-statistic: 1.13e+03 on 5 and 5589 DF,  p-value: <2e-16
 Running a 5-fold cross-validation on the combined model yields a RSS of 2.6 and a mean square of 2.14. The generated model seems to be quite robust.
 
 ![cross validation](https://github.com/seeba8/tud18-ds4se/blob/master/assignment3/crossvalidation.png?raw=true)
-
-// what does total on its own give us?
-
 
 **Our analysis did not show meaningful improvements compared to the control variables. We could therefore not show that in Rust there is a influence of the ownership parameters as compared to just the control variables**. 
 
