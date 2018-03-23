@@ -37,6 +37,7 @@ To improve the performance of mining code we implemented following code changes:
 * Exclude bugfixes with churn value higher than 50
 * Make list of excluded commits and add there every found commit containing defects that is not in the relevant period - comparing further results of defects tracking to the list allowed us to skip irrelevant commits immediately
 
+## Analysis
 In order to analyze only code containing components, we decided to choose only files with following extensions for analysis:
 * .c
 * .cpp
@@ -46,7 +47,6 @@ In order to analyze only code containing components, we decided to choose only f
 * .tuml
 * .mk
 
-## Analysis
 To perform the analysis, we employed R to generate a multilinear regression model. To validate that our findings were actually significant, we compared our model with a model using just the control variable.
 
 To first obtain a feeling for the data, we generate a pair polt and analyse outliers. This is the cleaned version after removing obvious outliers such as non-code files. We integrate this step in the in our preprocessing.
@@ -94,7 +94,7 @@ F-statistic: 1.17e+03 on 3 and 5591 DF,  p-value: <2e-16
 
 The adjusted r^2 is poor at 0.386. It indicates that used model for independent variables is not supposed to provide accurate prediction on future code defects and in this matter using control variablers model should be better.
 
-Combining both control and independent variables does not meaningfully improve the adjusted r^2 (0.502). The only IV that is significant is minor with a p-value < 0.001. We can observe that including both control and independent variables in multilinear regression model increases the value of r^2 compared to the values for these groups of variables alone. However, the increase with respect to model including only control viariables is relatively small. The difference value is 0.008, which is less than 2% of relative increase. We can then conclude that, according to study of Rust project, considering ownership parameters in the process of creating code can lead to decrease in number of defects, but the change would not be significant.
+Combining both control and independent variables does not meaningfully improve the adjusted r^2 (0.502). The only IV that is significant is minor with a p-value < 0.001. We can observe that including both control and independent variables in multilinear regression model increases the value of r^2 compared to the values for these groups of variables alone. However, the increase with respect to model including only control viariables is relatively small. The difference value is 0.008, which is less than 2% of relative increase. We can then conclude that, according to study of Rust project, considering independent variables in the process of creating code can lead to decrease in number of defects (two of them are significant), but change would be small and might not be worth changing ownership approach in the project.
 
 ```
 Coefficients: (1 not defined because of singularities)
@@ -132,7 +132,7 @@ F-statistic:  132 on 1 and 5593 DF,  p-value: <2e-16
 ![ownership coef](https://github.com/seeba8/tud18-ds4se/blob/master/assignment3/ownership_defects.png?raw=true)
 
 
-Running a 5-fold cross-validation on the combined model yields a RSS of 2.6 and a mean square of 2.14. The generated model seems to be quite robust.
+Running a 5-fold cross-validation on the combined model yields a RSS of 2.6 and a mean square of 2.14. The generated model seems to be quite robust. By examining output variables and a plot we can observe that multilinear regression might be used to create model with used variables. 
 
 ```
 Sum of squares = 2390    Mean square = 2.14    n = 1119 
@@ -147,4 +147,4 @@ Overall (Sum over all 1119 folds)
 **Our analysis did not show meaningful improvements compared to the control variables. We could therefore not show that in Rust there is a influence of the ownership parameters as compared to just the control variables**. 
 
 We do however believe that our result might very well be caused by a suboptimal method for finding post-release bugs.
-In the future, it would be meaningful to consider maybe issues from the bugtracker and link them to the code via the issue number.
+In the future, it would be meaningful to consider issues from the bugtracker and link them to the code via the issue number.
