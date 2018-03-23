@@ -12,9 +12,7 @@ The project's scope is divided into four assignments:
 1. Calculate minor, major, total and ownership features (as described in "Don't Touch My Code!") for components in selected GitHub repository.
 2. Calculate churn and size features (as described in "Don't Touch My Code!") for components in selected Git repository. Find number of defects in every file discovered in post-release period.
 3. Perform linear regression analysis and cross-validation for obtained feautures to check if they are significantly influential on number of defects in code.
-4. Prepare a presentation of the results
-
-The final goal was to prepare a presentation of results of analysis, compare it with "Don't Touch My Code!" and form conclusions. 
+4. Prepare a presentation of the results of analysis, compare it with "Don't Touch My Code!" and form conclusions. Finish unfinished work, push it to GitHub and write a report.
 
 ## Description of work and operational decisions
 We considered the repository of the Rust programming language https://github.com/rust-lang/rust for our analysis. 
@@ -74,7 +72,7 @@ Multiple R-squared:  0.494,	Adjusted R-squared:  0.494
 F-statistic: 2.73e+03 on 2 and 5592 DF,  p-value: <2e-16
 ```
 
-The coefficient of determination (adjusted r^2) is 0.494.
+The coefficient of determination (adjusted r^2) is 0.494. Therefore the linear model would not give precise predictions of number of future bugs with respect to control variables.
 
 Next, we analyze the number of *post-release bugs* in a file as a function of just the independent variables *minor*, *major*, *ownership*, and *total*. We find highly-significant positive correlations for major and minor to the number of post-release bugs and a significant correlation between ownership and post-release bugs. Total as the sum of major and minor is ignored.
 
@@ -94,9 +92,9 @@ Multiple R-squared:  0.386,	Adjusted R-squared:  0.386
 F-statistic: 1.17e+03 on 3 and 5591 DF,  p-value: <2e-16
 ```
 
-The adjusted r^2 is poor at 0.386.
+The adjusted r^2 is poor at 0.386. It indicates that used model for independent variables is not supposed to provide accurate prediction on future code defects and in this matter using control variablers model should be better.
 
-Combining both control and independent variables does not meaningfully improve the adjusted r^2 (0.502). The only IV that is significant is minor with a p-value < 0.001.
+Combining both control and independent variables does not meaningfully improve the adjusted r^2 (0.502). The only IV that is significant is minor with a p-value < 0.001. We can observe that including both control and independent variables in multilinear regression model increases the value of r^2 compared to the values for these groups of variables alone. However, the increase with respect to model including only control viariables is relatively small. The difference value is 0.008, which is less than 2% of relative increase. We can then conclude that, according to study of Rust project, considering ownership parameters in the process of creating code can lead to decrease in number of defects, but the change is not significant.
 
 ```
 Coefficients: (1 not defined because of singularities)
