@@ -116,22 +116,35 @@ F-statistic: 1.13e+03 on 5 and 5589 DF,  p-value: <2e-16
 
 The interesting observation was that ownership viariable did have positive influence on multilinear model, when we were expecting it to be negative, as it was shown in "Don't Touch My Code!" work. However, it can be explained by low significance of this variable in multilinear model. Applying linear regression in terms of number of defects to only ownership variable shown that if it is the only factor, the influence is negative. 
 
-'''
-ownership coef
-'''
+```
+Coefficients:
+                     Estimate Std. Error t value Pr(>|t|)    
+(Intercept)            1.1007     0.0662    16.6   <2e-16 ***
+cleaned_ds$ownership  -1.1053     0.0960   -11.5   <2e-16 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-![ownership coef]()
+Residual standard error: 2.2 on 5593 degrees of freedom
+Multiple R-squared:  0.0231,	Adjusted R-squared:  0.023 
+F-statistic:  132 on 1 and 5593 DF,  p-value: <2e-16
+```
+
+![ownership coef](https://github.com/seeba8/tud18-ds4se/blob/master/assignment3/ownership_defects.png?raw=true)
 
 
 Running a 5-fold cross-validation on the combined model yields a RSS of 2.6 and a mean square of 2.14. The generated model seems to be quite robust.
 
-'''
-cross-validation coef
-'''
+```
+Sum of squares = 2390    Mean square = 2.14    n = 1119 
+
+Overall (Sum over all 1119 folds) 
+ ms 
+2.6 
+```
 
 ![cross validation](https://github.com/seeba8/tud18-ds4se/blob/master/assignment3/crossvalidation.png?raw=true)
 
 **Our analysis did not show meaningful improvements compared to the control variables. We could therefore not show that in Rust there is a influence of the ownership parameters as compared to just the control variables**. 
 
 We do however believe that our result might very well be caused by a suboptimal method for finding post-release bugs.
-In the future, it would be meaningful to consider maybe issues from the bugtracker and link them to the code via the issue number
+In the future, it would be meaningful to consider maybe issues from the bugtracker and link them to the code via the issue number.
