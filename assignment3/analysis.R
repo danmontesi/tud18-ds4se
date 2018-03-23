@@ -23,11 +23,30 @@ cleaned_ds <- ds[ds$filename%in%cleaned_filenames, ]
 # Filter defect count ####
 #head(cleaned_ds[order(cleaned_ds$defects, decreasing = TRUE), ], n = 100)
 
+#filter files with outlyingly high churn #####
+#cleaned_ds = cleaned_ds[cleaned_ds$churn<15000,]
+#This reduces r² by quite a bit. For cross validation, it yields better results (overall mse of 2.08 as opposed to 2.6), but the reduction in r² outweighs that
+
 # Add binary features ####
 cleaned_ds$has_defect <- as.integer(cleaned_ds$defects > 0)
-
+#try decision tree
+# Can't get them to work
+# library(rpart)
+# tree1 <- rpart(cleaned_ds$has_defect ~ cleaned_ds$churn + cleaned_ds$size + cleaned_ds$minor + cleaned_ds$major + cleaned_ds$total + cleaned_ds$ownership, method="class")
+# printcp(tree1)
+# plotcp(tree1)
+# plot(tree1, compress=TRUE)
+# text(tree1, use.n=TRUE)
+# 
+# tree2 <- rpart(cleaned_ds$defects ~ cleaned_ds$churn + cleaned_ds$size + cleaned_ds$minor + cleaned_ds$major + cleaned_ds$total + cleaned_ds$ownership, method="anova")
+# printcp(tree2)
+# plotcp(tree2)
+# plot(tree2, compress=TRUE)
+# text(tree2, use.n=TRUE)
 # Plot ####
+
 pairs(cleaned_ds)
+
 
 # Linear model on control variables
 modelc <- lm(cleaned_ds$defects ~ cleaned_ds$churn + cleaned_ds$size)
@@ -37,16 +56,21 @@ modeli <- lm(cleaned_ds$defects ~ cleaned_ds$minor + cleaned_ds$major + cleaned_
 summary(modeli)
 # Linear Model combined ####
 model <- lm(cleaned_ds$defects ~ cleaned_ds$churn + cleaned_ds$size + cleaned_ds$minor + cleaned_ds$major + cleaned_ds$total + cleaned_ds$ownership)
-plot(model)
+#plot(model)
 confint(model)
 coef(model)
 summary(model)
+plot(cleaned_ds$defects~cleaned_ds$churn+cleaned_ds$minor)
 
-cleaned_ds <- cleaned_ds[cleaned_ds$ownership < 1, ]
-model <- lm(cleaned_ds$defects ~ cleaned_ds$ownership )
+# install.packages("plotly")
+# library(plotly)
+# plot_ly(x=cleaned_ds$churn,y=cleaned_ds$minor,z=cleaned_ds$defects, type="surface")
+
+##for one of the charts, remove all files with 100% ownership
+cleaned_ds1 <- cleaned_ds[cleaned_ds$ownership < 1, ]
+model <- lm(cleaned_ds1$defects ~ cleaned_ds1$ownership )
 plot(model)
 summary(model)
-pairs(cleaned_ds)
 
 
 # model binary flag ####
@@ -74,7 +98,16 @@ hist(cleaned_ds$size[cleaned_ds$size>150],breaks = 50)
 # total vs defects ###
 totalmodel <- lm(cleaned_ds$defects ~ cleaned_ds$total)
 summary(totalmodel)
+
 #overlord churn ####
 churnmodel <- lm(cleaned_ds$defects ~ cleaned_ds$churn)
 plot(cleaned_ds$defects ~ cleaned_ds$churn)
 abline(churnmodel,col="red")
+
+#ownership#####
+#cleaned_ds2 <- cleaned_ds[cleaned_ds$ownership<1,]
+#cleaned_ds2 <- cleaned_ds[cleaned_ds$defects<60,]
+ownershipmodel <- lm(cleaned_ds$defects ~ cleaned_ds$ownership)
+summary(ownershipmodel)
+plot(log(cleaned_ds$defects) ~ cleaned_ds$ownership)
+abline(ownershipmodel, col="red")
