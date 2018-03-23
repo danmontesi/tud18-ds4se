@@ -111,3 +111,10 @@ ownershipmodel <- lm(cleaned_ds$defects ~ cleaned_ds$ownership)
 summary(ownershipmodel)
 plot(log(cleaned_ds$defects) ~ cleaned_ds$ownership)
 abline(ownershipmodel, col="red")
+
+# 3d?####
+#install.packages("plot3D")
+library(plot3D)
+cleaned_ds3 <- cleaned_ds[cleaned_ds$defects<50,]
+scatter3D(x=cleaned_ds3$churn, y=cleaned_ds3$size, z=cleaned_ds3$defects, xlab="churn", ylab="size", zlab="defects")
+
