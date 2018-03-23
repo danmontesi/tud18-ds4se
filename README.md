@@ -1,7 +1,7 @@
 # tud18-ds4se (Data Science for Software Engineering during Athens Week March '18 at TU DELFT)
 
 ## Group members
-* Daniele Montesi (Politechnico di Milano) <daniele.montesi@mail.polimi.it>
+* Daniele Montesi (Politecnico di Milano) <daniele.montesi@mail.polimi.it>
 * Maciej Kedzielski (Politechnika Warszawska) <m.a.kedzielski@stud.elka.pw.edu.pl>
 * Michael Schwarz  (Technische Universität München) <m.schwarz@tum.de>
 * Sebastian Ober (Technische Universität München) <sebastian.ober@tum.de>
@@ -17,9 +17,10 @@ The project's scope is divided into four assignments:
 The final goal was to prepare a presentation of results of analysis, compare it with "Don't Touch My Code!" and form conclusions. 
 
 ## Description of work and operational decisions
-We considered the repository of the Rust programming language https://github.com/rust-lang/rust for our analysis. Rust is an open-source programing language, aimed on prevention of segmentation faults and thread safety.
+We considered the repository of the Rust programming language https://github.com/rust-lang/rust for our analysis. 
+Rust is an open-source programming language, aimed on prevention of segmentation faults and thread safety.
 
-As a component we considered single file. It was motivated by clear segregation of project modules into files and not complicated ways of mining statisctics and parameters of a GitHub file. 
+As a component we considered single file. It was motivated by clear segregation of project modules into files and not complicated ways of mining statistics and parameters of a GitHub file. 
 
 The range of dates we considered was between commits `3d7cd77e442ce34eaac8a176ae8be17669498ebc` (12/10/15) and `e8a0123241f0d397d39cd18fcc4e5e7edde22730` (12/22/16).
 This corresponds to release version 1.14.0 and all the changes in the year before leading up to it.
