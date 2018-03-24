@@ -6,6 +6,9 @@
 * Michael Schwarz  (Technische Universität München) <m.schwarz@tum.de>
 * Sebastian Ober (Technische Universität München) <sebastian.ober@tum.de>
 
+## Slides
+You can find the slides of the presentation [https://m-schwarz.net/blog/wp-content/uploads/2018/03/TUD18-web.pdf](here).
+
 ## Introduction
 The project is part of the Data Science for Software Engineering course during Athens Student Exchange Programme, March '18 edition. The course is led by Alberto Bacchelli, Professor of Empirical Software Engineering at the University of Zurich (UZH), Switzerland. The main objective of the project was to perform a study of the influence of ownership on the number of defects in program code. It was inspired by the work "Don’t Touch My Code! Examining the Effects of Ownership on Software Quality" by Bird et al. (2011). 
 The project's scope is divided into four assignments:
