@@ -1,10 +1,10 @@
 # tud18-ds4se (Data Science for Software Engineering during Athens Week March '18 at TU DELFT)
 
 ## Group members
-* Daniele Montesi (Politecnico di Milano) <daniele.montesi@mail.polimi.it>
-* Maciej Kędzielski (Politechnika Warszawska) <m.a.kedzielski@stud.elka.pw.edu.pl>
-* Michael Schwarz  (Technische Universität München) <m.schwarz@tum.de>
-* Sebastian Ober (Technische Universität München) <sebastian.ober@tum.de>
+* Daniele Montesi (Politecnico di Milano) <daniele.montesi[at]mail.polimi.it>
+* Maciej Kędzielski (Politechnika Warszawska) <m.a.kedzielski[at]stud.elka.pw.edu.pl>
+* Michael Schwarz  (Technische Universität München) <m.schwarz[at]tum.de>
+* Sebastian Ober (Technische Universität München) <sebastian.ober[at]tum.de>
 
 ## Slides
 You can find the slides of the presentation [here](https://m-schwarz.net/blog/wp-content/uploads/2018/03/TUD18-web.pdf).
